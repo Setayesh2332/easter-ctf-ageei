@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EggHunt CTF</title>
+  <link rel="stylesheet" href="/styles/main.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="logo"><span class="logo-egg"></span>EggHunt CTF</div>
+  <div class="tabs" id="tabs">
+    <button class="tab on" data-pg="home">Home</button>
+    <button class="tab" data-pg="signup">Sign up</button>
+    <button class="tab" data-pg="login">Log in</button>
+    <button class="tab gone" data-pg="challenges">Challenges</button>
+    <button class="tab gone" data-pg="leaderboard">Leaderboard</button>
+    <button class="tab gone" id="logout-btn">Log out</button>
+  </div>
+</nav>
+
+<!-- HOME -->
+<div class="pg on" id="pg-home">
+  <div class="hero">
+    <div class="badge">🐣 Easter 2025 · CTF Event</div>
+    <h1>Find the <em>hidden eggs.</em><br>Crack the code.</h1>
+    <p>Solve puzzles as a team of up to 3. Decrypt, deduce, and hunt your way to the top.</p>
+    <div class="ctas">
+      <button class="btn btn-p" data-goto="signup">Create account</button>
+      <button class="btn btn-o" data-goto="login">Log in</button>
+    </div>
+    <div class="stats">
+      <div><div class="snum" id="stat-challenges">—</div><div class="slbl">Challenges</div></div>
+      <div><div class="snum" id="stat-teams">—</div><div class="slbl">Teams</div></div>
+      <div><div class="snum">3</div><div class="slbl">Max team size</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SIGNUP -->
+<div class="pg" id="pg-signup">
+  <div class="card card-sm">
+    <div class="steps">
+      <div class="step-pill on" id="sp1">1 · Account</div>
+      <div class="step-pill" id="sp2">2 · Team</div>
+      <div class="step-pill" id="sp3">3 · Done</div>
+    </div>
+
+    <!-- Step 1 -->
+    <div id="s1">
+      <h2>Create account</h2>
+      <p class="card-sub">Your personal login for the event</p>
+      <div class="msg err" id="s1-err"></div>
+      <div class="field"><label>Your name</label><input id="s1-name" type="text" placeholder="e.g. Alex"/></div>
+      <div class="field"><label>Email</label><input id="s1-email" type="email" placeholder="you@example.com"/></div>
+      <div class="field"><label>Password</label><input id="s1-pass" type="password" placeholder="Min. 6 characters"/></div>
+      <button class="fbtn" id="s1-btn">Continue →</button>
+      <div class="sw">Already have an account? <a data-goto="login">Log in</a></div>
+    </div>
+
+    <!-- Step 2 -->
+    <div id="s2" class="gone">
+      <h2>Set up your team</h2>
+      <p class="card-sub">Choose how you want to play</p>
+      <div class="msg err" id="s2-err"></div>
+      <div class="mode-grid">
+        <div class="mode-btn on" id="m-create" data-mode="create">
+          <div class="mode-icon">🏕️</div>
+          <div class="mode-label">Create team</div>
+          <div class="mode-desc">Start a new team</div>
+        </div>
+        <div class="mode-btn" id="m-join" data-mode="join">
+          <div class="mode-icon">🔗</div>
+          <div class="mode-label">Join team</div>
+          <div class="mode-desc">Enter a join code</div>
+        </div>
+        <div class="mode-btn" id="m-solo" data-mode="solo">
+          <div class="mode-icon">🥚</div>
+          <div class="mode-label">Play solo</div>
+          <div class="mode-desc">Just you</div>
+        </div>
+      </div>
+      <div id="f-create">
+        <div class="field"><label>Team name</label><input id="s2-tname" type="text" placeholder="e.g. Shell Crackers"/></div>
+      </div>
+      <div id="f-join" class="gone">
+        <div class="field"><label>Join code</label><input id="s2-code" type="text" placeholder="e.g. 4829" maxlength="4"/></div>
+      </div>
+      <div id="f-solo" class="gone">
+        <p class="muted" style="margin-bottom:.9rem;">A solo team will be created just for you.</p>
+      </div>
+      <button class="fbtn" id="s2-btn">Finish signup</button>
+    </div>
+
+    <!-- Step 3 -->
+    <div id="s3" class="gone" style="text-align:center;padding:1rem 0;">
+      <div style="font-size:40px;margin-bottom:1rem;">🎉</div>
+      <h2 id="s3-title">You're in!</h2>
+      <p class="card-sub" id="s3-sub">Your team is ready.</p>
+      <div class="code-box gone" id="s3-codebox">
+        <div class="code-val" id="s3-code">—</div>
+        <div class="code-hint">Share this code with teammates (max 3 total)</div>
+      </div>
+      <button class="fbtn" style="margin-top:1rem;" data-goto="challenges">Start hunting 🥚</button>
+    </div>
+  </div>
+</div>
+
+<!-- LOGIN -->
+<div class="pg" id="pg-login">
+  <div class="card card-sm">
+    <h2>Welcome back</h2>
+    <p class="card-sub">Log in to continue the hunt</p>
+    <div class="msg err" id="login-err"></div>
+    <div class="field"><label>Email</label><input id="l-email" type="email" placeholder="you@example.com"/></div>
+    <div class="field"><label>Password</label><input id="l-pass" type="password" placeholder="Your password"/></div>
+    <button class="fbtn" id="login-btn">Log in</button>
+    <div class="sw">No account yet? <a data-goto="signup">Sign up</a></div>
+  </div>
+</div>
+
+<!-- CHALLENGES -->
+<div class="pg" id="pg-challenges">
+  <div class="ch-header">
+    <h2>Easter Eggs 🥚</h2>
+    <span class="muted" id="solve-count"></span>
+  </div>
+  <div class="grid" id="challenges-grid">
+    <p class="muted">Loading challenges...</p>
+  </div>
+</div>
+
+<!-- CHALLENGE MODAL -->
+<div class="overlay gone" id="overlay">
+  <div class="modal">
+    <button class="modal-x" id="modal-close">✕</button>
+    <div class="modal-icon" id="m-icon">🥚</div>
+    <h2 id="m-title">Challenge</h2>
+    <p class="modal-desc" id="m-desc">Description</p>
+    <div class="modal-pts" id="m-pts">100 pts</div>
+    <div class="msg ok" id="m-ok">✓ Correct! Points added to your team.</div>
+    <div class="msg err" id="m-err">✗ Wrong answer. Try again.</div>
+    <div class="field" id="m-input-wrap">
+      <label>Your answer</label>
+      <input type="text" id="m-ans" placeholder="Enter the flag..."/>
+    </div>
+    <button class="fbtn" id="modal-submit">Submit answer</button>
+  </div>
+</div>
+
+<!-- LEADERBOARD -->
+<div class="pg" id="pg-leaderboard">
+  <div class="ch-header"><h2>Leaderboard 🏆</h2></div>
+  <div id="leaderboard-list"><p class="muted">Loading...</p></div>
+</div>
+
+<script type="module" src="/js/app.js"></script>
+</body>
+</html>
